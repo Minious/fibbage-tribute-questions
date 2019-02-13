@@ -54,6 +54,28 @@ app.get('/', function(req, res) {
     res.render('index.ejs', {status: req.query.status});
 });
 
+app.get('/mass-import', function(req, res) {
+    var json = require('./questions.json');
+
+    json.normal.forEach(question => {
+        //console.log(question.question);
+        //console.log(question.answer+'\n');
+        var firstLanguage = Object.keys(question)[0];
+        var newQuestionRef = database.ref('questions/' + firstLanguage).push({
+            question: question[firstLanguage].question.replace('<BLANK>', '...').replace('....', '...'),
+            solution: question[firstLanguage].answer
+        });
+        var uuid = newQuestionRef.key;
+        Object.keys(question).slice(1).forEach(language => {
+            database.ref('questions/' + language + '/' + uuid).set({
+                question: question[language].question.replace('<BLANK>', '...').replace('....', '...'),
+                solution: question[language].answer
+            });
+        });
+    });
+    res.redirect('/?status=success');
+});
+
 app.get('/question/random', function(req, res) {
     var language = req.query.lan || DEFAULT_LANGUAGE;
     database.ref('questions/' + language).once('value').then(function(snapshot) {
