@@ -25,6 +25,8 @@ var express = require('express');
 
 var app = express();
 
+app.use(express.static(__dirname + '/public'));
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -49,19 +51,7 @@ function getRandomSubset(arr, n) {
 }
 
 app.get('/', function(req, res) {
-    res.send(`
-    <form action="/question/add" method="post">
-        <select name="language">
-            <option value="en">English</option>
-            <option value="fr">French</option>
-        </select>
-        Question :<br>
-        <input type="text" name="question"><br>
-        Solution :<br>
-        <input type="text" name="solution"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-    `);
+    res.render('index.ejs', {status: req.query.status});
 });
 
 app.get('/question/random', function(req, res) {
@@ -93,7 +83,7 @@ app.post('/question/add', function(req, res) {
         question: req.body.question,
         solution: req.body.solution
     });
-    res.redirect('/');
+    res.redirect('/?status=success');
 });
 
 app.post('/question/edit', function(req, res) {
