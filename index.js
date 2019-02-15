@@ -1,5 +1,8 @@
 const DEFAULT_LANGUAGE = 'fr';
 
+// Request
+const request = require("request");
+
 // Firebase
 var admin = require("firebase-admin");
 
@@ -50,8 +53,26 @@ function getRandomSubset(arr, n) {
     return result;
 }
 
+function getConfig() {
+    return new Promise(resolve => {
+        const url = 'https://fibbage-tribute.herokuapp.com/config.json';
+        console.log(url);
+        request.get(url, (error, response, body) => {
+            if(error) {
+                return console.dir(error);
+            }
+            config = JSON.parse(body);
+            console.log("Config :", config);
+
+            resolve(config);
+        });
+    });
+}
+
 app.get('/', function(req, res) {
-    res.render('index.ejs', {status: req.query.status});
+    getConfig().then(function(config) {
+        res.render('index.ejs', {status: req.query.status, languages: config.languages});
+    });
 });
 
 app.get('/mass-import', function(req, res) {

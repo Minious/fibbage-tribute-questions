@@ -22,8 +22,11 @@
                     </div>
                     <div class="col-75">
                         <select name="language" id="language">
-                            <option value="en">English</option>
-                            <option value="fr">French</option>
+                            <% Object.keys(languages).forEach(code => {%>
+                                <option value="<%=code%>">
+                                    <%=languages[code].name%>
+                                </option>
+                            <% }) %>
                         </select>
                     </div>
                 </div>
