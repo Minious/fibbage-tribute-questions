@@ -99,6 +99,52 @@ app.get('/mass-import', function(req, res) {
     res.redirect('/?status=success');
 });
 
+app.set('json spaces', 4);
+
+function getMissingItems(target, arr){
+    var missingItems = [];
+    arr.forEach(function(item){
+        if(!target.includes(item))
+            missingItems.push(item);
+    });
+    return missingItems;
+}
+
+app.get('/untranslated', function(req, res) {
+    database.ref('questions').once('value').then(function(snapshot) {
+        var translations = {};
+        var languages = [];
+
+        var questions = snapshot.val();
+        //console.log(questions);
+        Object.keys(questions).forEach(language => {
+            languages.push(language);
+            Object.keys(questions[language]).forEach(uuid => {
+                if(!translations[uuid])
+                    translations[uuid] = [];
+                translations[uuid].push(language);
+            });
+        });
+
+        var missingTranslations = {};
+        Object.keys(translations).forEach(uuid => {
+            missingTranslations[uuid] = getMissingItems(translations[uuid], languages);
+        });
+
+        var missingTranslationsReverse = {};
+        Object.keys(missingTranslations).forEach(uuid => {
+            missingTranslations[uuid].forEach(language => {
+                if(!missingTranslationsReverse[language])
+                    missingTranslationsReverse[language] = []
+                missingTranslationsReverse[language].push(uuid);
+            });
+        });
+
+        //res.json(missingTranslationsReverse);
+        res.render('missing-translations.ejs', {missingTranslations: missingTranslations, missingTranslationsReverse: missingTranslationsReverse});
+    });
+});
+
 app.get('/question/random', function(req, res) {
     var language = req.query.lan || DEFAULT_LANGUAGE;
     database.ref('questions/' + NODE_ENV + '/' + language).once('value').then(function(snapshot) {

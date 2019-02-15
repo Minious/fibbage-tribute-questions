@@ -286,6 +286,36 @@
 					"yelled at",
 					"used as a soccer ball"
 				]
+			},
+			"fr":{
+				"category":"Punjab",
+                "question":"Le festival sportif de Kila Raipur, qui a lieu chaque année à Punjab en Inde, organise de nombreuses compétitions étranges et dangereuses, comme par exemple celle où les participants doivent s'allonger au sol et <BLANK>.",
+                "answer":"se faire rouler dessus par un tracteur",
+				"alternateSpellings":[
+					"run over by tractors",
+					"squished by tractors",
+					"squished by a tractor"
+				],
+				"suggestions":[
+					"stabbed",
+					"handcuffed to a rocket",
+					"murdered",
+					"kicked by a mule",
+					"buried alive",
+					"acid poured on them",
+					"smashed by an anvil",
+					"humped by a bear",
+					"set on fire",
+					"shaved",
+					"attacked by dogs",
+					"farted on",
+					"biten by a viper",
+					"nailed to the ground",
+					"dismembered",
+					"attacked by fire ants",
+					"yelled at",
+					"used as a soccer ball"
+				]
 			}
 		},
 		{
@@ -317,13 +347,70 @@
 					"corn stalks",
 					"taste buds"
 				]
+			},
+			"fr":{
+				"category":"steroids",
+				"question":"Après une réaction allergique aux stréroïdes utilisés pour soigner l'asthme, une femme de 28 ans s'est vue pousser <BLANK> sur la tête à la place de cheveux.",
+				"answer":"des ongles",
+				"alternateSpellings":[
+					"nails",
+					"finger nails"
+				],
+				"suggestions":[
+					"flowers",
+					"daisies",
+					"moss",
+					"feathers",
+					"nipples",
+					"antlers",
+					"noses",
+					"eyes",
+					"teeth",
+					"grass",
+					"beaks",
+					"scales",
+					"needles",
+					"a fetus",
+					"crystals",
+					"horns",
+					"corn stalks",
+					"taste buds"
+				]
 			}
 		},
 		{
 			"en":{
 				"category":"Lucy",
-				"question":"In a 1999 interview with <i>US Weekly</i>, actress Lucy Liu revealed that she once had sex with a <BLANK>.",
+				"question":"In a 1999 interview with US Weekly, actress Lucy Liu revealed that she once had sex with a <BLANK>.",
 				"answer":"ghost",
+				"alternateSpellings":[
+
+				],
+				"suggestions":[
+					"teacher",
+					"serial killer",
+					"rabbit",
+					"time traveller",
+					"horse",
+					"monk",
+					"pool boy",
+					"hobo",
+					"senator",
+					"Slim Jim",
+					"mule",
+					"statue",
+					"king",
+					"dolphin",
+					"friend’s grandfather",
+					"cactus",
+					"dog",
+					"president"
+				]
+			},
+			"fr":{
+				"category":"Lucy",
+				"question":"Durant une interview accordée au journal US Weekly en 1999, l'actrice Lucy Liu révéla avoir eu une relation sexuelle avec un/une <BLANK>.",
+				"answer":"fantôme",
 				"alternateSpellings":[
 
 				],

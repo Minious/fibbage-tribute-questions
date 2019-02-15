@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Fibbage Tribute Questions</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <script src="scripts/jquery-3.3.1.js"></script>
+    </head>
+
+    <body>
+        <% Object.keys(missingTranslations).forEach(uuid => {%>
+            <%if(missingTranslations[uuid].length > 0) { %>
+                <p>
+                    <%=uuid%> : 
+                    <%=missingTranslations[uuid].join(', ')%>
+                </p>
+            <% } %>
+        <% }) %>
+    </body>
+</html>
