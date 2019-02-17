@@ -1,5 +1,7 @@
 const DEFAULT_LANGUAGE = 'fr';
 
+NODE_ENV = process.env.NODE_ENV || "dev";
+
 // Request
 const request = require("request");
 
@@ -82,13 +84,13 @@ app.get('/mass-import', function(req, res) {
         //console.log(question.question);
         //console.log(question.answer+'\n');
         var firstLanguage = Object.keys(question)[0];
-        var newQuestionRef = database.ref('questions/' + firstLanguage).push({
+        var newQuestionRef = database.ref('questions/' + NODE_ENV + '/' + firstLanguage).push({
             question: question[firstLanguage].question.replace('<BLANK>', '...').replace('....', '...'),
             solution: question[firstLanguage].answer
         });
         var uuid = newQuestionRef.key;
         Object.keys(question).slice(1).forEach(language => {
-            database.ref('questions/' + language + '/' + uuid).set({
+            database.ref('questions/' + NODE_ENV + '/' + language + '/' + uuid).set({
                 question: question[language].question.replace('<BLANK>', '...').replace('....', '...'),
                 solution: question[language].answer
             });
@@ -99,14 +101,14 @@ app.get('/mass-import', function(req, res) {
 
 app.get('/question/random', function(req, res) {
     var language = req.query.lan || DEFAULT_LANGUAGE;
-    database.ref('questions/' + language).once('value').then(function(snapshot) {
+    database.ref('questions/' + NODE_ENV + '/' + language).once('value').then(function(snapshot) {
         res.json(randomProperty(snapshot.val()));
     });
 });
 
 app.get('/question/random/:nb', function(req, res) {
     var language = req.query.lan || DEFAULT_LANGUAGE;
-    database.ref('questions/' + language).once('value').then(function(snapshot) {
+    database.ref('questions/' + NODE_ENV + '/' + language).once('value').then(function(snapshot) {
         var subsetKeys = getRandomSubset(Object.keys(snapshot.val()), req.params.nb);
         var subset = subsetKeys.map(key => res[key] = snapshot.val()[key]);
         res.json(subset);
@@ -115,14 +117,14 @@ app.get('/question/random/:nb', function(req, res) {
 
 app.get('/question/:id', function(req, res) {
     var language = req.query.lan || DEFAULT_LANGUAGE;
-    database.ref('questions/' + language + '/' + req.params.id).once('value').then(function(snapshot) {
+    database.ref('questions/' + NODE_ENV + '/' + language + '/' + req.params.id).once('value').then(function(snapshot) {
         res.json(snapshot.val());
     });
 });
 
 app.post('/question/add', function(req, res) {
     var language = req.body.language || DEFAULT_LANGUAGE;
-    database.ref('questions/' + language).push({
+    database.ref('questions/' + NODE_ENV + '/' + language).push({
         question: req.body.question,
         solution: req.body.solution
     });
@@ -131,7 +133,7 @@ app.post('/question/add', function(req, res) {
 
 app.post('/question/edit', function(req, res) {
     var language = req.body.language || DEFAULT_LANGUAGE;
-    database.ref('questions/' + language + '/' + req.body.id).set({
+    database.ref('questions/' + NODE_ENV + '/' + language + '/' + req.body.id).set({
         question: req.body.question,
         solution: req.body.solution
     });
